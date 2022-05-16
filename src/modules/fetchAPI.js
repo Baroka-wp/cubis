@@ -1,4 +1,7 @@
 const main = document.querySelector('.main');
+const appId = 'SpbnUJ4uyMfFME6XWyNT';
+const base = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps';
+
 
 const fetchCategories = async () => {
   const url = 'https://www.themealdb.com/api/json/v1/1/categories.php';
@@ -44,7 +47,8 @@ const addMeal = (mealData) => {
   });
 };
 
-const loadMealbyCategorie = (mealData, categorieName, categorieDesc) => {
+const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
+  const likesList = await getLikes()
   main.innerHTML = '';
   const mainTitle = document.querySelector('.mainTitle');
   const categorieDetails = document.querySelector('.categorieDetails');
@@ -52,32 +56,71 @@ const loadMealbyCategorie = (mealData, categorieName, categorieDesc) => {
   categorieDetails.innerHTML = '';
   mainTitle.innerHTML = `${categorieName}`;
   categorieDetails.innerHTML = `${categorieDesc}`;
-
   mealData.forEach((item) => {
+    const count = countLike(likesList, item.idMeal)
     const div = document.createElement('div');
-    div.classList.add(`${item.idMeal}`);
     div.classList.add('mealContent');
     div.innerHTML = `
     <img class="mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
     <p>${item.strMeal}  </p>
     <div class="actions">
-      <p> <i class="fa-solid fa-thumbs-up"></i> 2M  </p>
-      <button type="button" name="button">Comment </button>
-      <button type="button" name="button">Reservation </button>
+      <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"></i> <span class="count">${count}<span> </p>
+      <button type="button" name="button">Comment 2M </button>
+      <button type="button" name="button">Reservation 3k</button>
     </div>
     `;
-
     main.appendChild(div);
   });
+  const likeIcone = document.querySelectorAll('.fa-thumbs-up')
+  likeIcone.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      const itemId = e.target.parentElement.classList[0];
+      const count = e.target.parentElement.querySelector('span');
+      addlikes(itemId)
+      count.innerHTML = parseInt(count.innerText,10) + 1;
+      item.classList.add('active');
+    });
+    const count = item.parentElement.querySelector('span');
+    if(parseInt(count.innerText,10) > 0 ) {
+      item.classList.add('active')
+    }
+  })
 };
 
 
-const likeIcone = document.querySelectorAll('.fa-thumbs-up')
+const getLikes = async (itemId) => {
+  const appUrl = `${base}/${appId}/likes`
+  const response = await fetch(appUrl);
+  const jsonData = await response.json()
+  return jsonData
+}
 
-likeIcone.forEach((item) => {
-  item.addEventListener('click', () => {
-    item.classList.toggle('active')
-  });
-})
+const countLike = (likesList, itemId) => {
+  const itemLikes = likesList.find(l => l.item_id === itemId)
+  let likeCount = 0
+  if(itemLikes != undefined) {
+    likeCount = itemLikes.likes
+  } else {
+    likeCount = 0
+  }
+
+  return likeCount
+}
+
+const addlikes = async (item_id) => {
+  const appUrl = `${base}/${appId}/likes`
+  await fetch(appUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      item_id,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+}
+
+
+
 
 export default fetchCategories;
