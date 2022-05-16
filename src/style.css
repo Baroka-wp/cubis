@@ -38,7 +38,6 @@ a {
   padding: 5px;
 }
 
-
 .actions button {
   background: none;
   cursor: pointer;
@@ -135,7 +134,7 @@ a {
   background-color: antiquewhite;
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   width: 100%;
   height: 100vh;
   padding: 50px;
@@ -151,7 +150,7 @@ a {
   gap: 20px;
 }
 
-.topDiv img{
+.topDiv img {
   align-self: center;
   width: 40%;
 }
@@ -161,7 +160,7 @@ a {
   align-self: flex-end;
 }
 
-.commentform form{
+.commentform form {
   display: flex;
   flex-direction: column;
   gap: 10px;
