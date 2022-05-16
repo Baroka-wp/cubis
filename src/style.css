@@ -69,7 +69,7 @@ a {
 }
 
 .singleContainer {
-  width: 25%;
+  width: 30%;
   padding: 20px;
 }
 
@@ -85,6 +85,7 @@ a {
 }
 
 .mealImg {
+  cursor: pointer;
   max-width: 90%;
   border-radius: 15px;
 }
@@ -107,6 +108,7 @@ a {
 .actions {
   padding-top: 10px;
   display: flex;
+  align-items: baseline;
   gap: 5px;
   width: 100%;
 }
@@ -123,4 +125,44 @@ a {
 
 .actions .fa-thumbs-up.active {
   color: salmon;
+}
+
+.commentModal {
+  display: none;
+}
+
+.commentModal.active {
+  background-color: antiquewhite;
+  position: fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100vh;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: scroll;
+}
+
+.topDiv {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.topDiv img{
+  align-self: center;
+  width: 40%;
+}
+
+.commentform {
+  width: 50%;
+  align-self: flex-end;
+}
+
+.commentform form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
