@@ -8,7 +8,7 @@ body {
   font-family: "Poppins", sans-serif;
   padding: 0;
   margin: 0;
-  background-color: bisque;
+  background-color: AntiqueWhite;
 }
 
 h1,
@@ -27,4 +27,61 @@ ul {
 a {
   text-decoration: none;
   color: black;
+}
+
+button {
+  cursor: pointer;
+  background: salmon;
+  border: 2px solid White;
+  color: white;
+  padding: 10px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
+}
+
+.main {
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.singleContainer {
+  width: 25%;
+  padding: 20px;
+}
+
+.singleContainer img{
+  display: block;
+}
+
+.description {
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 25px;
+}
+
+.mealImg {
+  max-width: 90%;
+  border-radius: 15px;
+}
+
+.mealContent {
+  width: 27%;
+  padding: 10px;
+}
+
+.categorieDetails {
+  width: 50%;
+  padding: 20px;
+  margin: 20px 0px;
 }
