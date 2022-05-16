@@ -1,4 +1,4 @@
 import './style.css';
-import fetchCategories from './modules/fetchAPI.js'
+import fetchCategories from './modules/fetchAPI.js';
 
-fetchCategories()
+fetchCategories();
