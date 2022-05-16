@@ -59,14 +59,25 @@ const loadMealbyCategorie = (mealData, categorieName, categorieDesc) => {
     div.classList.add('mealContent');
     div.innerHTML = `
     <img class="mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
-    <p>${item.strMeal}</p>
-    <button type="button" name="button">Comment </button>
-    <button type="button" name="button">Like </button>
-    <button type="button" name="button">Reservation </button>
+    <p>${item.strMeal}  </p>
+    <div class="actions">
+      <p> <i class="fa-solid fa-thumbs-up"></i> 2M  </p>
+      <button type="button" name="button">Comment </button>
+      <button type="button" name="button">Reservation </button>
+    </div>
     `;
 
     main.appendChild(div);
   });
 };
+
+
+const likeIcone = document.querySelectorAll('.fa-thumbs-up')
+
+likeIcone.forEach((item) => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('active')
+  });
+})
 
 export default fetchCategories;
