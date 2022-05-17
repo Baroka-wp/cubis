@@ -8,7 +8,7 @@ body {
   font-family: "Poppins", sans-serif;
   padding: 0;
   margin: 0;
-  background-color: bisque;
+  background-color: antiquewhite;
 }
 
 h1,
@@ -27,4 +27,143 @@ ul {
 a {
   text-decoration: none;
   color: black;
+}
+
+.showbtn {
+  cursor: pointer;
+  background: salmon;
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.actions button {
+  background: none;
+  cursor: pointer;
+  border: none;
+  color: black;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.actions button:hover {
+  border-bottom: 2px solid black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
+}
+
+.main {
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.singleContainer {
+  width: 30%;
+  padding: 20px;
+}
+
+.singleContainer img {
+  display: block;
+}
+
+.description {
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 25px;
+}
+
+.mealImg {
+  cursor: pointer;
+  max-width: 90%;
+  border-radius: 15px;
+}
+
+.mealContent {
+  width: 27%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.categorieDetails {
+  width: 50%;
+  min-height: 50px;
+  max-height: 75px;
+  overflow: hidden;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.actions {
+  padding-top: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  width: 100%;
+}
+
+.actions .fa-thumbs-up {
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.actions .fa-thumbs-up:hover {
+  transform: rotate(-15deg);
+}
+
+.actions .fa-thumbs-up.active {
+  color: salmon;
+}
+
+.commentModal {
+  display: none;
+}
+
+.commentModal.active {
+  background-color: antiquewhite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 50px;
+  display: flex;
+  gap: 40px;
+  overflow: scroll;
+}
+
+.topDiv img {
+  width: 500px;
+}
+
+.commentform {
+  width: 50%;
+}
+
+.commentform form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fa-xmark {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  font-size: 30px;
+}
+
+.fa-xmark:hover {
+  color: salmon;
+  transform: rotate(-30deg);
 }
