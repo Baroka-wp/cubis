@@ -23,37 +23,44 @@
 
 ## Live
 
-[Go Live](https://baroka-wp.github.io/toDoProject/)
+[Go Live](https://jolly-otter-7d885a.netlify.app/)
 
 ## Authors
 
 👤 **Author : IROTORI Baroka**
 
-- GitHub: [@githubhandle](https://github.com/Baroka-wp)
-- Twitter: [@twitterhandle](https://twitter.com/IrotoriB)
-- LinkedIn: [LinkedIn](www.linkedin.com/in/baroka)
+- GitHub: [baroka-wp](https://github.com/Baroka-wp)
+- Twitter: [IrotoriB](https://twitter.com/IrotoriB)
+- LinkedIn: [baroka](www.linkedin.com/in/baroka)
 
 👥 **Co Author :**
 
 - GitHub: [@githubhandle](#)
 - Twitter: [@twitterhandle](#)
 - LinkedIn: [LinkedIn](#)
-
-👥 **Co Author :**
-
-- GitHub: [@githubhandle](#)
-- Twitter: [@twitterhandle](#)
-- LinkedIn: [LinkedIn](#)
-
-## Collaborators
-
-👤 **David Ger**
-
-- GitHub: [@ger619](https://github.com/ger619)
-- Twitter: [@abol_ger](https://twitter.com/ger_abol)
-- LinkedIn: [David Ger](https://www.linkedin.com/in/david-ger-426b4576/)
 
 ## Install
+### Run the project in your local machine
+
+- Clone the repository
+```
+  git clone https://github.com/Baroka-wp/Leaderboard.git
+
+  cd Leaderboard
+```
+- install all dependances
+
+```
+npm install
+```
+
+- Run the server
+
+```
+npm start
+```
+- Open your browzer and go to [localhost:8080](http://localhost:8080/)
+
 
 ### Run Linters tests
 To track linter errors locally follow these steps:  
