@@ -36,6 +36,7 @@ a {
 .hero1 {
   background: url('../src/assets/images/beef.png') no-repeat left bottom;
 }
+
 .hero2 {
   background: url('../src/assets/images/miscellaneous.png') no-repeat right bottom;
 }
@@ -106,6 +107,7 @@ a {
   padding: 10px;
   margin-bottom: 20px;
 }
+
 .mealName {
   max-height: 20px;
   overflow: scroll;
@@ -204,7 +206,7 @@ a {
 }
 
 input.username,
- input.comment {
+input.comment {
   background-color: antiquewhite;
   outline: none;
   border: none;

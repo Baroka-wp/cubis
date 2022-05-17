@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const involveBase = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps';
 const appId = 'SpbnUJ4uyMfFME6XWyNT';
 
@@ -9,10 +10,10 @@ const getLikes = async () => {
 };
 
 const countLike = (likesList, itemId) => {
-  const itemLikes = likesList.find(l => l.item_id === itemId);
+  const itemLikes = likesList.find((l) => l.item_id === itemId);
   let likeCount = 0;
   if (itemLikes !== undefined) {
-    likeCount = itemLikes.likes
+    likeCount = itemLikes.likes;
   } else {
     likeCount = 0;
   }
@@ -49,11 +50,12 @@ const addComments = async (item_id, username, comment) => {
 };
 
 const getComment = async (item_id) => {
-  const url = `${involveBase}/${appId}/comments?item_id=`+item_id;
+  const url = `${involveBase}/${appId}/comments?item_id=${item_id}`;
   const response = await fetch(url);
-  const jsonData = await response.json()
-  return jsonData
-}
+  const jsonData = await response.json();
+  return jsonData;
+};
 
-
-export { getLikes, countLike, addlikes, addComments, getComment };
+export {
+  getLikes, countLike, addlikes, addComments, getComment,
+};
