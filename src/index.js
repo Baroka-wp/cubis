@@ -1,6 +1,7 @@
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCategories, addCategorieMeal } from './modules/fetchAPI.js';
+
 const allCategorie = document.querySelector('.allCategorie');
 
 (async () => {
@@ -15,4 +16,4 @@ allCategorie.addEventListener('click', async () => {
   const categorieList = await fetchCategories();
   catCount.innerHTML = `we have ${categorieList.length} Categories`;
   addCategorieMeal(categorieList);
-})
+});
