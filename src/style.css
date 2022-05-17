@@ -113,34 +113,17 @@ a {
   overflow: scroll;
 }
 
-.categorieDetails {
-  width: 50%;
-  min-height: 50px;
-  max-height: 75px;
-  overflow: hidden;
-  padding: 20px;
-  margin: 20px 0;
-}
-
-.actions {
-  padding-top: 10px;
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-  width: 80%;
-}
-
-.actions .fa-thumbs-up {
-  font-size: 12px;
+.fa-thumbs-up {
+  font-size: 22px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
 
-.actions .fa-thumbs-up:hover {
+.fa-thumbs-up:hover {
   transform: rotate(-15deg);
 }
 
-.actions .fa-thumbs-up.active {
+.fa-thumbs-up.active {
   color: salmon;
 }
 
