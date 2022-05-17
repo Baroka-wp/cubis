@@ -142,7 +142,7 @@ a {
   overflow: scroll;
 }
 
-.topDiv img{
+.topDiv img {
   width: 500px;
 }
 
@@ -165,6 +165,5 @@ a {
 
 .fa-xmark:hover {
   color: salmon;
-
   transform: rotate(-30deg);
 }
