@@ -1,11 +1,10 @@
-![](https://img.shields.io/badge/Microverse-blueviolet)
-
+![screenshot](images/Capture%20d%E2%80%99%C3%A9cran%202022-05-17%20%C3%A0%2017.55.24.png)
 
 <br />
 
-# Awesome Book
+# CUBIS - CAPSTONE PROJECT
 
-> This app is to manage todo list
+> CUBIS FOOD is an application that allows you to find meal ideas that you can make simply with the ingredients you have.
 
 ## LOOM VIDEO PRESENTING
 [Watch the presentation of the projet on Loom](#)
@@ -17,6 +16,8 @@
 - Js
 - Linter
 - Webpack
+- Jest
+- APIs
 
 ## Mookup
 ![free](#)
@@ -33,20 +34,20 @@
 - Twitter: [IrotoriB](https://twitter.com/IrotoriB)
 - LinkedIn: [baroka](www.linkedin.com/in/baroka)
 
-👥 **Co Author :**
+👥 **Co Author : ADISA Hammed**
 
-- GitHub: [@githubhandle](#)
-- Twitter: [@twitterhandle](#)
-- LinkedIn: [LinkedIn](#)
+- GitHub: [@AbuRayhaan](https://github.com/AbuRayhaan)
+- Twitter: [@ayinla2011](https://twitter.com/Ayinla2011)
+- LinkedIn: [Hammed Adisa](https://www.linkedin.com/in/hammed-adisa-b4378372/)
 
 ## Install
 ### Run the project in your local machine
 
 - Clone the repository
 ```
-  git clone https://github.com/Baroka-wp/Leaderboard.git
+  git clone https://github.com/Baroka-wp/cubis.git
 
-  cd Leaderboard
+  cd Cubis
 ```
 - install all dependances
 
