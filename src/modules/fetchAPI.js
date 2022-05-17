@@ -60,18 +60,19 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
     const div = document.createElement('div');
     div.classList.add('mealContent');
     div.innerHTML = `
-    <img class="${item.idMeal} mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
+    <img class="mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
     <p>${item.strMeal}  </p>
     <div class="actions">
       <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"></i> <span class="count">${count}<span> </p>
-      <button type="button" name="button">Comment 2M </button>
-      <button type="button" name="button">Reservation 3k</button>
+      <button class="${item.idMeal} commentBtn" name="button">Comment </button>
+      <button type="button" name="button">Reservation</button>
     </div>
     `;
     main.appendChild(div);
   });
   const likeIcone = document.querySelectorAll('.fa-thumbs-up');
-  const mealImg = document.querySelectorAll('.mealImg');
+  const commentBtn = document.querySelectorAll('.commentBtn');
+
   likeIcone.forEach((item) => {
     item.addEventListener('click', (e) => {
       const itemId = e.target.parentElement.classList[0];
@@ -86,64 +87,108 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
     }
   });
 
-  mealImg.forEach((item) => {
+  commentBtn.forEach((item) => {
     item.addEventListener('click', async (e) => {
-      const iDMeal = e.target.classList[0];
-      const meal = await getMealById(iDMeal);
+      var item_id = e.target.classList[0];
+      const meal = await getMealById(item_id);
+      var comments = await getComment(item_id);
       document.querySelector('.commentModal').classList.add('active');
       document.querySelector('.commentModal').innerHTML = `
       <div class="topDiv">
         <img src="${meal.strMealThumb}" alt="">
-        <div class="meal_details">
-          <p class="description">${meal.strInstructions}</p>
-          <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">INGEDIENTS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Mark</td>
-                </tr>
-                <tr>
-                  <td>Thornton</td>
-                </tr>
-              <tbody>
-            </table>
-        </div>
       </div>
         <div class="commentform">
-        <div class="commentlis">
-          <h3>COMMENTS</h3>
-          <ul>
-          <em>User 1 :</em>
-          <li>comment </li>
-          <em>User 2 :</em>
-          <li>comment </li>
-          <em>User 3 :</em>
-          <li>comment</li>
-          <em>User 4 :</em>
-          <li>comment </li>
-          <em>User 5 :</em>
-          <li>comment </li>
-          </ul>
-        </div>
+        <i class="fa-solid fa-xmark"></i>
+          <div class="meal_details">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">INGEDIENTS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark</td>
+                  </tr>
+                  <tr>
+                    <td>Thornton</td>
+                  </tr>
+                <tbody>
+              </table>
+            <p class="description">${meal.strInstructions}</p>
+          </div>
+          <div >
+            <h3>COMMENTS</h3>
+            <small class="commentCount"></small>
+            <ul class="commentlist"></ul>
+          </div>
           <form >
-            <input type="text" name="" value="" placeholder="Your Name">
-            <input type="text" name="" value="" placeholder="Your Comment">
-            <input type="submit" name="" value="Submit">
+            <input class="username" type="text" name="" value="" placeholder="Your Name">
+            <input class="comment" type="text" name="" value="" placeholder="Your Comment">
+            <small class="msg"></small>
+            <button class="submitBtn">submit</button>
           </form>
         </div>
-      `
+      `;
+      var commentlist = document.querySelector('.commentlist');
+      var commentCount = document.querySelector('.commentCount');
+      if(comments.error){
+        commentCount.innerHTML = "";
+        commentCount.innerHTML = "0 comment found";
+      } else {
+        commentCount.innerHTML = "";
+        commentCount.innerHTML = comments.length + " comments in this recipe";
+        comments.forEach(comment => {
+            const li = document.createElement('li');
+            const em = document.createElement('em')
+            em.innerHTML = "";
+            em.innerHTML = `${comment.username}`;
+            li.innerHTML = `${comment.comment}`;
+
+            commentlist.appendChild(em)
+            commentlist.appendChild(li)
+        });
+      };
+
+      document.querySelector('.fa-xmark').addEventListener('click', () => {
+        document.querySelector('.commentModal').classList.remove('active');
+      });
+
+      document.querySelector('.submitBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        const username = document.querySelector('.username');
+        const comment = document.querySelector('.comment');
+        const msg = document.querySelector('.msg');
+        if(username.value !== "" && comment.value !== "") {
+            addComments(item_id, username.value, comment.value)
+            msg.innerHTML = "";
+            msg.innerHTML = "👍🏾 Comment is added succesfully!";
+            const li = document.createElement('li');
+            const em = document.createElement('em')
+            em.innerHTML = "";
+            em.innerHTML = `${username.value}`;
+            li.innerHTML = `${comment.value}`;
+            commentlist.appendChild(em)
+            commentlist.appendChild(li)
+            username.value = "";
+            comment.value = "";
+            commentCount.innerHTML = "";
+            const count = comments.length || 0
+            commentCount.innerHTML = count + 1 + " comments in this recipe";
+        } else {
+          msg.innerHTML = "";
+          msg.innerHTML = " 😞 Something went wront., Kindly input the fields!";
+        }
+      })
     });
   });
-
 };
 
+
+
 const getLikes = async () => {
-  const appUrl = `${base}/${appId}/likes`;
-  const response = await fetch(appUrl);
+  const url = `${base}/${appId}/likes`;
+  const response = await fetch(url);
   const jsonData = await response.json();
   return jsonData;
 };
@@ -161,8 +206,8 @@ const countLike = (likesList, itemId) => {
 };
 
 const addlikes = async (item_id) => {
-  const appUrl = `${base}/${appId}/likes`;
-  await fetch(appUrl, {
+  const url = `${base}/${appId}/likes`;
+  await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       item_id,
@@ -172,6 +217,29 @@ const addlikes = async (item_id) => {
     },
   });
 };
+
+const addComments = async (item_id, username, comment) => {
+  //const item_id = parseInt(itemId,10);
+  const url = `${base}/${appId}/comments`;
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      item_id,
+      username,
+      comment,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+};
+
+const getComment = async (item_id) => {
+  const url = `${base}/${appId}/comments?item_id=`+item_id;
+  const response = await fetch(url);
+  const jsonData = await response.json()
+  return jsonData
+}
 
 const getMealById = async (idMeal) => {
   const url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + idMeal;
