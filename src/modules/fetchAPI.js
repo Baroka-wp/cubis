@@ -26,11 +26,13 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
     const div = document.createElement('div');
     div.classList.add('mealContent');
     div.innerHTML = `
-    <img class="mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
-    <p class="mealName">${item.strMeal}  </p>
-    <div class="actions">
-      <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"><span class="count">${count}<span> </i> </p>
-      <button class="${item.idMeal} commentBtn" name="button">Comment </button>
+    <div class="card" style="width: 18rem;">
+      <img class="mealImg card-img-top" src="${item.strMealThumb}" alt="${item.strMeal}">
+      <div class="card-body">
+        <h5 class="mealName card-title">${item.strMeal} </h5>
+        <p class ="${item.idMeal} card-text"> <i class="fa-solid fa-thumbs-up"><span class="count">  ${count}<span> </i> </p>
+        <button class="${item.idMeal} commentBtn btn btn-warning" name="button">Comment </button>
+      </div>
     </div>
     `;
     main.appendChild(div);
