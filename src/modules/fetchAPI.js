@@ -1,75 +1,92 @@
+import * as Involve from './fetchInvolvementAPI.js'
 const main = document.querySelector('.main');
 const appId = 'SpbnUJ4uyMfFME6XWyNT';
-const base = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps';
+const apiBase = 'https://www.themealdb.com/api/json/v1/1'
 
-const fetchCategories = async () => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+const fetchCategories = async() => {
+  const url = `${apiBase}/categories.php`;
   const response = await fetch(url);
   const jsonData = await response.json();
-  const mealCategoriesData = jsonData.categories;
-
-  addMeal(mealCategoriesData);
+  const mealCategoriesData = await jsonData.categories;
   return mealCategoriesData;
-};
+}
 
 const fetchMealbyCategorie = async (categorieName, categorieDesc) => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=' + categorieName;
+  const catCount = document.querySelector('.catCount')
+  const url = `${apiBase}/filter.php?c=`+ categorieName;
   const response = await fetch(url);
   const jsonData = await response.json();
   const mealData = jsonData.meals;
   loadMealbyCategorie(mealData, categorieName, categorieDesc);
+  catCount.innerHTML = ` We have ${mealData.length} Menu`
   return mealData;
 };
 
-const addMeal = (mealData) => {
-  mealData.forEach((item) => {
-    const div = document.createElement('div');
-    div.classList.add('singleContainer');
-    div.innerHTML = `
-    <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
-    <p class="categorieName">${item.strCategory}</p>
-    <p class="description">
-      ${item.strCategoryDescription}
-    </p>
-    <button class="showbtn" type="button" >show meals </button>
-    `;
-    main.appendChild(div);
-
-    const showbtn = document.querySelectorAll('button');
-    showbtn.forEach((item) => {
-      item.addEventListener('click', (e) => {
-        const categorieName = e.target.parentElement.querySelector('.categorieName');
-        const categorieDesc = e.target.parentElement.querySelector('.description');
-        fetchMealbyCategorie(categorieName.innerText, categorieDesc.innerText);
-      });
-    });
-  });
+const getMealById = async (idMeal) => {
+  const url = `${apiBase}/lookup.php?i=`+idMeal;
+  const response = await fetch(url);
+  const jsonData = await response.json();
+  const meal = jsonData.meals[0];
+  return meal;
 };
 
+const addCategorieMeal = (mealData) => {
+    mealData.forEach((item) => {
+      const div = document.createElement('div');
+      div.classList.add('singleContainer');
+      div.innerHTML = `
+        <div class="mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-dark overflow-hidden">
+          <div class="my-3 py-3">
+            <h2 class="categorieName display-5">${item.strCategory}</h2>
+            <p class="lead description">${item.strCategoryDescription}</p>
+            <button class="showbtn" type="button" >show meals </button>
+          </div>
+          <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+              <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
+          </div>
+        </div>`;
+
+      main.appendChild(div);
+
+      const showbtn = document.querySelectorAll('button');
+      showbtn.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          const categorieName = e.target.parentElement.querySelector('.categorieName');
+          const categorieDesc = e.target.parentElement.querySelector('.description');
+          fetchMealbyCategorie(categorieName.innerText, categorieDesc.innerText);
+        });
+      });
+    });
+  };
+
+
 const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
-  const likesList = await getLikes();
+  const likesList = await Involve.getLikes();
   main.innerHTML = '';
   const mainTitle = document.querySelector('.mainTitle');
+  const qMark = document.querySelector('.qMark')
   const categorieDetails = document.querySelector('.categorieDetails');
   mainTitle.innerHTML = '';
-  categorieDetails.innerHTML = '';
-  mainTitle.innerHTML = `${categorieName}`;
-  categorieDetails.innerHTML = `${categorieDesc}`;
+  qMark.innerHTML = '';
+  qMark.innerHTML = '';
+  mainTitle.innerHTML = `You want ${categorieName} ?!`;
+  qMark.innerHTML = 'Very good ! Now choose one menu !';
   mealData.forEach((item) => {
-    const count = countLike(likesList, item.idMeal);
+    const count = Involve.countLike(likesList, item.idMeal);
     const div = document.createElement('div');
     div.classList.add('mealContent');
     div.innerHTML = `
     <img class="mealImg" src="${item.strMealThumb}" alt="${item.strMeal}">
-    <p>${item.strMeal}  </p>
+    <p class="mealName">${item.strMeal}  </p>
     <div class="actions">
-      <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"></i> <span class="count">${count}<span> </p>
+      <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"><span class="count">${count}<span> </i> </p>
       <button class="${item.idMeal} commentBtn" name="button">Comment </button>
       <button type="button" name="button">Reservation</button>
     </div>
     `;
     main.appendChild(div);
   });
+
   const likeIcone = document.querySelectorAll('.fa-thumbs-up');
   const commentBtn = document.querySelectorAll('.commentBtn');
 
@@ -77,7 +94,7 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
     item.addEventListener('click', (e) => {
       const itemId = e.target.parentElement.classList[0];
       const count = e.target.parentElement.querySelector('span');
-      addlikes(itemId);
+      Involve.addlikes(itemId);
       count.innerHTML = parseInt(count.innerText, 10) + 1;
       item.classList.add('active');
     });
@@ -91,14 +108,14 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
     item.addEventListener('click', async (e) => {
       var item_id = e.target.classList[0];
       const meal = await getMealById(item_id);
-      var comments = await getComment(item_id);
+      var comments = await Involve.getComment(item_id);
       document.querySelector('.commentModal').classList.add('active');
       document.querySelector('.commentModal').innerHTML = `
       <div class="topDiv">
+      <i class="fa-solid fa-xmark"></i>
         <img src="${meal.strMealThumb}" alt="">
       </div>
         <div class="commentform">
-        <i class="fa-solid fa-xmark"></i>
           <div class="meal_details">
               <table class="table table-striped">
                 <thead>
@@ -140,7 +157,9 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
         commentCount.innerHTML = comments.length + " comments in this recipe";
         comments.forEach(comment => {
             const li = document.createElement('li');
-            const em = document.createElement('em')
+            const em = document.createElement('em');
+            li.classList.add('commentMsg');
+            em.classList.add('commentName');
             em.innerHTML = "";
             em.innerHTML = `${comment.username}`;
             li.innerHTML = `${comment.comment}`;
@@ -160,7 +179,7 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
         const comment = document.querySelector('.comment');
         const msg = document.querySelector('.msg');
         if(username.value !== "" && comment.value !== "") {
-            addComments(item_id, username.value, comment.value)
+            Involve.addComments(item_id, username.value, comment.value)
             msg.innerHTML = "";
             msg.innerHTML = "👍🏾 Comment is added succesfully!";
             const li = document.createElement('li');
@@ -168,6 +187,8 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
             em.innerHTML = "";
             em.innerHTML = `${username.value}`;
             li.innerHTML = `${comment.value}`;
+            li.classList.add('commentMsg')
+            em.classList.add('commentName')
             commentlist.appendChild(em)
             commentlist.appendChild(li)
             username.value = "";
@@ -183,70 +204,4 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
     });
   });
 };
-
-
-
-const getLikes = async () => {
-  const url = `${base}/${appId}/likes`;
-  const response = await fetch(url);
-  const jsonData = await response.json();
-  return jsonData;
-};
-
-const countLike = (likesList, itemId) => {
-  const itemLikes = likesList.find(l => l.item_id === itemId);
-  let likeCount = 0;
-  if (itemLikes !== undefined) {
-    likeCount = itemLikes.likes
-  } else {
-    likeCount = 0;
-  }
-
-  return likeCount;
-};
-
-const addlikes = async (item_id) => {
-  const url = `${base}/${appId}/likes`;
-  await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      item_id,
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
-};
-
-const addComments = async (item_id, username, comment) => {
-  //const item_id = parseInt(itemId,10);
-  const url = `${base}/${appId}/comments`;
-  await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      item_id,
-      username,
-      comment,
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
-};
-
-const getComment = async (item_id) => {
-  const url = `${base}/${appId}/comments?item_id=`+item_id;
-  const response = await fetch(url);
-  const jsonData = await response.json()
-  return jsonData
-}
-
-const getMealById = async (idMeal) => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + idMeal;
-  const response = await fetch(url);
-  const jsonData = await response.json();
-  const meal = jsonData.meals[0];
-  return meal;
-};
-
-export default fetchCategories;
+export {fetchCategories, addCategorieMeal};
