@@ -31,7 +31,6 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
     <div class="actions">
       <p class ="${item.idMeal}"> <i class="fa-solid fa-thumbs-up"><span class="count">${count}<span> </i> </p>
       <button class="${item.idMeal} commentBtn" name="button">Comment </button>
-      <button type="button" name="button">Reservation</button>
     </div>
     `;
     main.appendChild(div);
