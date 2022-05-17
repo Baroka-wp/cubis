@@ -1,49 +1,69 @@
+/* eslint-disable camelcase */
+
 const main = document.querySelector('.main');
 const appId = 'SpbnUJ4uyMfFME6XWyNT';
 const base = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps';
 
-const fetchCategories = async () => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/categories.php';
+const getLikes = async () => {
+  const url = `${base}/${appId}/likes`;
   const response = await fetch(url);
   const jsonData = await response.json();
-  const mealCategoriesData = jsonData.categories;
-
-  addMeal(mealCategoriesData);
-  return mealCategoriesData;
+  return jsonData;
 };
 
-const fetchMealbyCategorie = async (categorieName, categorieDesc) => {
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorieName}`;
-  const response = await fetch(url);
-  const jsonData = await response.json();
-  const mealData = jsonData.meals;
-  loadMealbyCategorie(mealData, categorieName, categorieDesc);
-  return mealData;
+const countLike = (likesList, itemId) => {
+  const itemLikes = likesList.find((l) => l.item_id === itemId);
+  let likeCount = 0;
+  if (itemLikes !== undefined) {
+    likeCount = itemLikes.likes;
+  } else {
+    likeCount = 0;
+  }
+
+  return likeCount;
 };
 
-const addMeal = (mealData) => {
-  mealData.forEach((item) => {
-    const div = document.createElement('div');
-    div.classList.add('singleContainer');
-    div.innerHTML = `
-    <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
-    <p class="categorieName">${item.strCategory}</p>
-    <p class="description">
-      ${item.strCategoryDescription}
-    </p>
-    <button class="showbtn" type="button" >show meals </button>
-    `;
-    main.appendChild(div);
-
-    const showbtn = document.querySelectorAll('button');
-    showbtn.forEach((item) => {
-      item.addEventListener('click', (e) => {
-        const categorieName = e.target.parentElement.querySelector('.categorieName');
-        const categorieDesc = e.target.parentElement.querySelector('.description');
-        fetchMealbyCategorie(categorieName.innerText, categorieDesc.innerText);
-      });
-    });
+const addlikes = async (itemId) => {
+  const url = `${base}/${appId}/likes`;
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      item_id: itemId,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
   });
+};
+
+const addComments = async (itemId, username, comment) => {
+  const url = `${base}/${appId}/comments`;
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      item_id: itemId,
+      username,
+      comment,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+};
+
+const getComment = async (itemId) => {
+  const url = `${base}/${appId}/comments?item_id=${itemId}`;
+  const response = await fetch(url);
+  const jsonData = await response.json();
+  return jsonData;
+};
+
+const getMealById = async (idMeal) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+  const response = await fetch(url);
+  const jsonData = await response.json();
+  const meal = jsonData.meals[0];
+  return meal;
 };
 
 const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
@@ -184,66 +204,48 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
   });
 };
 
-const getLikes = async () => {
-  const url = `${base}/${appId}/likes`;
+const fetchMealbyCategorie = async (categorieName, categorieDesc) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorieName}`;
   const response = await fetch(url);
   const jsonData = await response.json();
-  return jsonData;
+  const mealData = jsonData.meals;
+  loadMealbyCategorie(mealData, categorieName, categorieDesc);
+  return mealData;
 };
 
-const countLike = (likesList, itemId) => {
-  const itemLikes = likesList.find((l) => l.item_id === itemId);
-  let likeCount = 0;
-  if (itemLikes !== undefined) {
-    likeCount = itemLikes.likes;
-  } else {
-    likeCount = 0;
-  }
+const addMeal = (mealData) => {
+  mealData.forEach((item) => {
+    const div = document.createElement('div');
+    div.classList.add('singleContainer');
+    div.innerHTML = `
+    <img src="${item.strCategoryThumb}" alt="${item.strCategory}">
+    <p class="categorieName">${item.strCategory}</p>
+    <p class="description">
+      ${item.strCategoryDescription}
+    </p>
+    <button class="showbtn" type="button" >show meals </button>
+    `;
+    main.appendChild(div);
 
-  return likeCount;
-};
-
-const addlikes = async (item_id) => {
-  const url = `${base}/${appId}/likes`;
-  await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      item_id,
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
+    const showbtn = document.querySelectorAll('button');
+    showbtn.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        const categorieName = e.target.parentElement.querySelector('.categorieName');
+        const categorieDesc = e.target.parentElement.querySelector('.description');
+        fetchMealbyCategorie(categorieName.innerText, categorieDesc.innerText);
+      });
+    });
   });
 };
 
-const addComments = async (item_id, username, comment) => {
-  const url = `${base}/${appId}/comments`;
-  await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      item_id,
-      username,
-      comment,
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
-};
-
-const getComment = async (item_id) => {
-  const url = `${base}/${appId}/comments?item_id=${item_id}`;
+const fetchCategories = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/categories.php';
   const response = await fetch(url);
   const jsonData = await response.json();
-  return jsonData;
-};
+  const mealCategoriesData = jsonData.categories;
 
-const getMealById = async (idMeal) => {
-  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
-  const response = await fetch(url);
-  const jsonData = await response.json();
-  const meal = jsonData.meals[0];
-  return meal;
+  addMeal(mealCategoriesData);
+  return mealCategoriesData;
 };
 
 export default fetchCategories;
