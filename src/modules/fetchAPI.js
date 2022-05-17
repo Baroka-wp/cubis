@@ -13,7 +13,7 @@ const fetchCategories = async () => {
 };
 
 const fetchMealbyCategorie = async (categorieName, categorieDesc) => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=' + categorieName;
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorieName}`;
   const response = await fetch(url);
   const jsonData = await response.json();
   const mealData = jsonData.meals;
@@ -82,16 +82,16 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
       item.classList.add('active');
     });
     const count = item.parentElement.querySelector('span');
-    if(parseInt(count.innerText,10) > 0 ) {
+    if (parseInt(count.innerText, 10) > 0) {
       item.classList.add('active');
     }
   });
 
   commentBtn.forEach((item) => {
     item.addEventListener('click', async (e) => {
-      var item_id = e.target.classList[0];
+      const item_id = e.target.classList[0];
       const meal = await getMealById(item_id);
-      var comments = await getComment(item_id);
+      const comments = await getComment(item_id);
       document.querySelector('.commentModal').classList.add('active');
       document.querySelector('.commentModal').innerHTML = `
       <div class="topDiv">
@@ -130,25 +130,25 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
           </form>
         </div>
       `;
-      var commentlist = document.querySelector('.commentlist');
-      var commentCount = document.querySelector('.commentCount');
-      if(comments.error){
-        commentCount.innerHTML = "";
-        commentCount.innerHTML = "0 comment found";
+      const commentlist = document.querySelector('.commentlist');
+      const commentCount = document.querySelector('.commentCount');
+      if (comments.error) {
+        commentCount.innerHTML = '';
+        commentCount.innerHTML = '0 comment found';
       } else {
-        commentCount.innerHTML = "";
-        commentCount.innerHTML = comments.length + " comments in this recipe";
-        comments.forEach(comment => {
-            const li = document.createElement('li');
-            const em = document.createElement('em')
-            em.innerHTML = "";
-            em.innerHTML = `${comment.username}`;
-            li.innerHTML = `${comment.comment}`;
+        commentCount.innerHTML = '';
+        commentCount.innerHTML = `${comments.length} comments in this recipe`;
+        comments.forEach((comment) => {
+          const li = document.createElement('li');
+          const em = document.createElement('em');
+          em.innerHTML = '';
+          em.innerHTML = `${comment.username}`;
+          li.innerHTML = `${comment.comment}`;
 
-            commentlist.appendChild(em)
-            commentlist.appendChild(li)
+          commentlist.appendChild(em);
+          commentlist.appendChild(li);
         });
-      };
+      }
 
       document.querySelector('.fa-xmark').addEventListener('click', () => {
         document.querySelector('.commentModal').classList.remove('active');
@@ -159,32 +159,30 @@ const loadMealbyCategorie = async (mealData, categorieName, categorieDesc) => {
         const username = document.querySelector('.username');
         const comment = document.querySelector('.comment');
         const msg = document.querySelector('.msg');
-        if(username.value !== "" && comment.value !== "") {
-            addComments(item_id, username.value, comment.value)
-            msg.innerHTML = "";
-            msg.innerHTML = "👍🏾 Comment is added succesfully!";
-            const li = document.createElement('li');
-            const em = document.createElement('em')
-            em.innerHTML = "";
-            em.innerHTML = `${username.value}`;
-            li.innerHTML = `${comment.value}`;
-            commentlist.appendChild(em)
-            commentlist.appendChild(li)
-            username.value = "";
-            comment.value = "";
-            commentCount.innerHTML = "";
-            const count = comments.length || 0
-            commentCount.innerHTML = count + 1 + " comments in this recipe";
+        if (username.value !== '' && comment.value !== '') {
+          addComments(item_id, username.value, comment.value);
+          msg.innerHTML = '';
+          msg.innerHTML = '👍🏾 Comment is added succesfully!';
+          const li = document.createElement('li');
+          const em = document.createElement('em');
+          em.innerHTML = '';
+          em.innerHTML = `${username.value}`;
+          li.innerHTML = `${comment.value}`;
+          commentlist.appendChild(em);
+          commentlist.appendChild(li);
+          username.value = '';
+          comment.value = '';
+          commentCount.innerHTML = '';
+          const count = comments.length || 0;
+          commentCount.innerHTML = `${count + 1} comments in this recipe`;
         } else {
-          msg.innerHTML = "";
-          msg.innerHTML = " 😞 Something went wront., Kindly input the fields!";
+          msg.innerHTML = '';
+          msg.innerHTML = '😞 Something went wrong, Kindly input the fields!';
         }
-      })
+      });
     });
   });
 };
-
-
 
 const getLikes = async () => {
   const url = `${base}/${appId}/likes`;
@@ -194,10 +192,10 @@ const getLikes = async () => {
 };
 
 const countLike = (likesList, itemId) => {
-  const itemLikes = likesList.find(l => l.item_id === itemId);
+  const itemLikes = likesList.find((l) => l.item_id === itemId);
   let likeCount = 0;
   if (itemLikes !== undefined) {
-    likeCount = itemLikes.likes
+    likeCount = itemLikes.likes;
   } else {
     likeCount = 0;
   }
@@ -219,7 +217,6 @@ const addlikes = async (item_id) => {
 };
 
 const addComments = async (item_id, username, comment) => {
-  //const item_id = parseInt(itemId,10);
   const url = `${base}/${appId}/comments`;
   await fetch(url, {
     method: 'POST',
@@ -235,14 +232,14 @@ const addComments = async (item_id, username, comment) => {
 };
 
 const getComment = async (item_id) => {
-  const url = `${base}/${appId}/comments?item_id=`+item_id;
+  const url = `${base}/${appId}/comments?item_id=${item_id}`;
   const response = await fetch(url);
-  const jsonData = await response.json()
-  return jsonData
-}
+  const jsonData = await response.json();
+  return jsonData;
+};
 
 const getMealById = async (idMeal) => {
-  const url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + idMeal;
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
   const response = await fetch(url);
   const jsonData = await response.json();
   const meal = jsonData.meals[0];
