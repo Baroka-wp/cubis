@@ -1,5 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import fetchCategories from './modules/fetchAPI.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { fetchCategories , addCategorieMeal } from './modules/fetchAPI.js';
 
-fetchCategories();
+
+(async() => {
+    const catCount = document.querySelector('.catCount')
+    const categorieList = await fetchCategories();
+    catCount.innerHTML = `we have ${categorieList.length} Categories`
+    addCategorieMeal(categorieList)
+})();

@@ -25,8 +25,19 @@ ul {
 }
 
 a {
-  text-decoration: none;
+  color: black !important;
+}
+
+.site-header {
+  background-color: orange;
   color: black;
+}
+
+.hero1 {
+  background: url('../src/assets/images/beef.png') no-repeat left bottom;
+}
+.hero2 {
+  background: url('../src/assets/images/miscellaneous.png') no-repeat right bottom;
 }
 
 .showbtn {
@@ -56,19 +67,20 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: auto auto;
 }
 
 .main {
-  padding: 50px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+  width: 90%;
+  gap: 20px;
+  overflow-x: scroll;
+}
+
+.mainTitle {
+  font-size: 50px;
 }
 
 .singleContainer {
-  width: 30%;
+  background-color: antiquewhite;
   padding: 20px;
 }
 
@@ -77,7 +89,7 @@ a {
 }
 
 .description {
-  max-height: 50px;
+  max-height: 52px;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 25px;
@@ -90,9 +102,13 @@ a {
 }
 
 .mealContent {
-  width: 27%;
+  width: 40%;
   padding: 10px;
   margin-bottom: 20px;
+}
+.mealName {
+  max-height: 20px;
+  overflow: scroll;
 }
 
 .categorieDetails {
@@ -109,11 +125,11 @@ a {
   display: flex;
   align-items: baseline;
   gap: 5px;
-  width: 100%;
+  width: 80%;
 }
 
 .actions .fa-thumbs-up {
-  font-size: 18px;
+  font-size: 12px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
@@ -136,8 +152,9 @@ a {
   top: 0;
   left: 0;
   height: 100vh;
-  padding: 50px;
+  padding: 150px 50px 50px 50px;
   display: flex;
+  flex-flow: wrap;
   gap: 40px;
   overflow: scroll;
 }
@@ -163,7 +180,48 @@ a {
   font-size: 30px;
 }
 
+.copyrigth {
+  gap: 120px;
+}
+
 .fa-xmark:hover {
   color: salmon;
   transform: rotate(-30deg);
+}
+
+.commentMsg {
+  margin-bottom: 15px;
+  border-radius: 15px;
+  padding: 7px;
+  border: 1px solid salmon;
+  font-size: 14px;
+}
+
+.commentName {
+  font-size: 13px;
+  color: salmon;
+  margin-left: 20px;
+}
+
+input.username,
+ input.comment {
+  background-color: antiquewhite;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid white;
+  padding: 10px;
+}
+
+.submitBtn {
+  background: salmon;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 30px;
+  align-self: center;
+}
+
+footer {
+  max-width: 100% !important;
+  margin: 0 !important;
+  background: #ededed;
 }
