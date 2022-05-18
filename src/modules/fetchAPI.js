@@ -104,7 +104,7 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
         document.querySelector('.resevationModal').classList.remove('active');
       });
 
-      document.querySelector('.submitReservation').addEventListener('click', () => {
+      document.querySelector('.submitReservation').addEventListener('click', (e) => {
         e.preventDefault();
         const username = document.querySelector('.reservationName');
         Involve.addReservation(itemId, username.value);
