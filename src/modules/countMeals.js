@@ -1,6 +1,3 @@
-const countMeals = (mealData) => {
-  return mealData.length
-}
+const countMeals = (mealData) => mealData.length;
 
-
-export default countMeals
+export default countMeals;
