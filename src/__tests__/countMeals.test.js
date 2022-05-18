@@ -1,4 +1,4 @@
-import mealList from '../__mocks__/fetchApi.js';
+import { mealList } from '../__mocks__/fetchApi.js';
 import countMeals from '../modules/countMeals.js';
 
 test('count meals on page', () => {
