@@ -1,6 +1,5 @@
-import { likeslist, mealList, commentList } from '../__mocks__/fetchApi.js';
+import { mealList } from '../__mocks__/fetchApi.js';
 import countMeals from '../modules/countMeals.js';
-
 
 test('count meals on page', () => {
   const meals = mealList();
