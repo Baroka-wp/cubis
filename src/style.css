@@ -108,11 +108,6 @@ a {
   margin-bottom: 20px;
 }
 
-.mealName {
-  max-height: 20px;
-  overflow: scroll;
-}
-
 .fa-thumbs-up {
   font-size: 22px;
   cursor: pointer;

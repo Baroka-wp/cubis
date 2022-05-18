@@ -95,6 +95,7 @@ const likeslist = () => {
   ];
   return likes;
 };
+
 const mealList = () => {
   const list = [
     {
@@ -116,6 +117,7 @@ const mealList = () => {
   ];
   return list;
 };
+
 const commentList = () => {
   const comments = [
     {
