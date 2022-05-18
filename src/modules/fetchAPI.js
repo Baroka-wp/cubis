@@ -1,4 +1,7 @@
 import * as Involve from './fetchInvolvementAPI.js';
+import countLike from './countLikes.js';
+import countMeals from './countMeals.js';
+import countComments from './countComments.js';
 
 const main = document.querySelector('.main');
 const apiBase = 'https://www.themealdb.com/api/json/v1/1';
@@ -22,7 +25,7 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
   mainTitle.innerHTML = `You want ${categorieName} ?!`;
   qMark.innerHTML = 'Very good ! Now choose one menu !';
   mealData.forEach((item) => {
-    const count = Involve.countLike(likesList, item.idMeal);
+    const count = countLike(likesList, item.idMeal);
     const div = document.createElement('div');
     div.classList.add('mealContent');
     div.innerHTML = `
@@ -102,10 +105,10 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
       const commentCount = document.querySelector('.commentCount');
       if (comments.error) {
         commentCount.innerHTML = '';
-        commentCount.innerHTML = '0 comment found';
+        commentCount.innerHTML = `${countComments(comments)} comment found`;
       } else {
         commentCount.innerHTML = '';
-        commentCount.innerHTML = `${comments.length} comments in this recipe`;
+        commentCount.innerHTML = `${countComments(comments)} comments in this recipe`;
         comments.forEach((comment) => {
           const li = document.createElement('li');
           const em = document.createElement('em');
@@ -144,8 +147,7 @@ const loadMealbyCategorie = async (mealData, categorieName) => {
           username.value = '';
           comment.value = '';
           commentCount.innerHTML = '';
-          const count = comments.length || 0;
-          commentCount.innerHTML = `${count + 1} comments in this recipe`;
+          commentCount.innerHTML = `${countComments(comments) + 1} comments in this recipe`;
         } else {
           msg.innerHTML = '';
           msg.innerHTML = '😞 Something went wrong, Kindly input the fields!';
@@ -170,7 +172,7 @@ const fetchMealbyCategorie = async (categorieName, categorieDesc) => {
   const jsonData = await response.json();
   const mealData = jsonData.meals;
   loadMealbyCategorie(mealData, categorieName, categorieDesc);
-  catCount.innerHTML = ` We have ${mealData.length} Menu`;
+  catCount.innerHTML = ` We have ${countMeals(mealData)} Menu`;
   return mealData;
 };
 

@@ -9,18 +9,6 @@ const getLikes = async () => {
   return jsonData;
 };
 
-const countLike = (likesList, itemId) => {
-  const itemLikes = likesList.find((l) => l.item_id === itemId);
-  let likeCount = 0;
-  if (itemLikes !== undefined) {
-    likeCount = itemLikes.likes;
-  } else {
-    likeCount = 0;
-  }
-
-  return likeCount;
-};
-
 const addlikes = async (item_id) => {
   const url = `${involveBase}/${appId}/likes`;
   await fetch(url, {
@@ -57,5 +45,5 @@ const getComment = async (item_id) => {
 };
 
 export {
-  getLikes, countLike, addlikes, addComments, getComment,
+  getLikes, addlikes, addComments, getComment,
 };
