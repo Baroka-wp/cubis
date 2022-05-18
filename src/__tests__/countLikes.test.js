@@ -1,4 +1,4 @@
-import { likeslist, mealList, commentList } from '../__mocks__/fetchApi.js';
+import likeslist from '../__mocks__/fetchApi.js';
 import countLike from '../modules/countLikes.js';
 
 test('count likes for certain item', () => {
