@@ -7,7 +7,7 @@
 > CUBIS FOOD is an application that allows you to find meal ideas that you can make simply with the ingredients you have.
 
 ## LOOM VIDEO PRESENTING
-[Watch the presentation of the projet on Zoom](https://drive.google.com/file/d/1X4PMdm3tavYzzbfjhfqmQocGPMrYIYLB/view?usp=sharing)
+[Watch the presentation of the projet on Zoom](https://drive.google.com/file/d/12KlyzOF5V0vl6z1k7284-OROKMh44XsV/view?usp=sharing)
 
 ## Built With
 
